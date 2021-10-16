@@ -3,6 +3,13 @@
 O projeto foi criado para gerar tarefas fictícias para a simulação de tarefas de tempo real.  
 Ele gera conjuntos de tarefas com utilização de 40% até 100% de 10 em 10.  
 
+### Execução
+
+Para executar o projeto, rode o comando:
+
+```
+python3 main.py
+```
 ### Formato do arquivo
 
 #### Primeira linha  
