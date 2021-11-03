@@ -3,3 +3,5 @@ class Enviroment:
     DECIMAL_PLACES = 3 
     GENERATION_INITIAL_NUMBER = 1
     ROUNDS = 1
+    INITAL_UTILIZATION = .7
+    STEPS = .05
