@@ -1,0 +1,5 @@
+class Enviroment:
+    PROCESSORS_NUMBER = 2
+    DECIMAL_PLACES = 3 
+    GENERATION_INITIAL_NUMBER = 1
+    ROUNDS = 1
