@@ -12,7 +12,7 @@ DECIMAL_PLACES = 3
 GENERATION_INITIAL_NUMBER = 1
 ROUNDS = 1
 INITAL_UTILIZATION = .7
-STEPS = .05
+STEP = .05
 ```
 
 1. PROCESSORS_NUMBER = Quantidade de processadores
@@ -20,7 +20,7 @@ STEPS = .05
 3. GENERATION_INITIAL_NUMBER = Valor inicial da geração do arquivo
 4. ROUNDS = Quantidade de vezes que o gerador deve rodar para cada utilização
 5. INITIAL_UTILIZATION = Utilização inicial da geração
-6. STEPS = Valor do salto da utilização até chegar a 1
+6. STEP = Valor do salto da utilização até chegar a 1
 
 ## Execução
 

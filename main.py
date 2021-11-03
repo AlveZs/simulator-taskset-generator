@@ -6,7 +6,7 @@ utilization = round(float(Enviroment.INITAL_UTILIZATION), 1)
 processorsNumber = int(Enviroment.PROCESSORS_NUMBER)
 generationNumber = int(Enviroment.GENERATION_INITIAL_NUMBER)
 decimalPlaces = int(Enviroment.DECIMAL_PLACES)
-step = round(float(Enviroment.STEPS), 2)
+step = round(float(Enviroment.STEP), 2)
 
 print("Quantidade de processadores: ", processorsNumber)
 

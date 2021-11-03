@@ -4,4 +4,4 @@ class Enviroment:
     GENERATION_INITIAL_NUMBER = 1
     ROUNDS = 1
     INITAL_UTILIZATION = .7
-    STEPS = .05
+    STEP = .05
