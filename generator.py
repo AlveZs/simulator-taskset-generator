@@ -1,11 +1,14 @@
 from pathlib import Path
 import random
+from decimal import Decimal, getcontext
 
 class Generator:
-    def __init__(self, utilization, processorsNumber, generationNumber):      
+    def __init__(self, utilization, processorsNumber, generationNumber, decimalPlaces):      
         self.utilization = float(utilization)
         self.processorsNumber = int(processorsNumber)
+        self.decimalPlaces = int(decimalPlaces)
         self.generationNumber = generationNumber
+        getcontext().prec = decimalPlaces
     
     def generatedTasksetOutput(self, tasksNumber):
         print("Conjunto com utilizacao {} e {} tarefas gerado".format(self.utilization, tasksNumber))
@@ -36,12 +39,16 @@ class Generator:
 
             # proportionate utilization to total utilization of system
             for i in range(tasksNumber):
-                tasksUtilizations[i] = (tasksUtilizations[i]/sumTasksUtilizations)*totalUtilization
+                tasksUtilizations[i] = Decimal(tasksUtilizations[i])/Decimal(sumTasksUtilizations)*Decimal(totalUtilization)                
                 # prevent WCET > Period
                 if tasksUtilizations[i] > 1:
                     invalidTaskUtilization = True
                     break
-                tasksWcet[i] = tasksUtilizations[i]*tasksPeriod[i]
+                tasksWcet[i] = Decimal(tasksUtilizations[i])*Decimal(tasksPeriod[i])
+            # checks if total usage exceeds system capacity    
+            sumTasksUtilizations = sum(tasksUtilizations)
+            if (sumTasksUtilizations > (1 * self.processorsNumber)):
+                invalidTaskUtilization = True
             validTaskSet = not invalidTaskUtilization
 
         # generate folders
@@ -60,7 +67,7 @@ class Generator:
         for i in range(tasksNumber):
             f.write("1  ")
             for j in range(self.processorsNumber):
-                f.write("{} ".format(round(tasksWcet[i], 3)))    
+                f.write("{} ".format(tasksWcet[i]))    
             f.write("0  ")
             f.write("{} {}".format(tasksPeriod[i], tasksPeriod[i]))
             f.write("\n")
