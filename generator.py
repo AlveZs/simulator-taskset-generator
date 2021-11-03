@@ -12,6 +12,14 @@ class Generator:
     
     def generatedTasksetOutput(self, tasksNumber):
         print("Conjunto com utilizacao {} e {} tarefas gerado".format(self.utilization, tasksNumber))
+    
+    def isInvalidSum(self, processorsNumber, tasksNumber, tasksWcet, tasksPeriod):
+        totalUtilzation = 0.0
+        for i in range(tasksNumber):
+            taskUtilization = float(tasksWcet[i])/tasksPeriod[i]
+            totalUtilzation = totalUtilzation + taskUtilization
+        totalUtilzation = totalUtilzation
+        return (totalUtilzation - 1*processorsNumber) > 0.0
 
     def generate(self):
         tasksNumber = random.randrange(self.processorsNumber + 1, 2*self.processorsNumber + 1)
@@ -32,24 +40,27 @@ class Generator:
             
             # generate a list with tasks utilizations
             for i in range(tasksNumber):
-                tasksUtilizations[i] = random.random()
+                tasksUtilizations[i] = Decimal(random.random())
                 tasksPeriod[i] = random.randrange(1, 100)
 
             sumTasksUtilizations = sum(tasksUtilizations)
 
             # proportionate utilization to total utilization of system
             for i in range(tasksNumber):
-                tasksUtilizations[i] = Decimal(tasksUtilizations[i])/Decimal(sumTasksUtilizations)*Decimal(totalUtilization)                
+                tasksUtilizations[i] = (Decimal(tasksUtilizations[i])/Decimal(sumTasksUtilizations))*Decimal(totalUtilization)                
                 # prevent WCET > Period
                 if tasksUtilizations[i] > 1:
                     invalidTaskUtilization = True
                     break
-                tasksWcet[i] = Decimal(tasksUtilizations[i])*Decimal(tasksPeriod[i])
+                tasksWcet[i] = Decimal(Decimal(tasksUtilizations[i])*Decimal(tasksPeriod[i]))
             # checks if total usage exceeds system capacity
             if (not invalidTaskUtilization):
-                sumTasksUtilizations = sum(tasksUtilizations)
-                if (sumTasksUtilizations > (1 * self.processorsNumber)):
-                    invalidTaskUtilization = True
+                invalidTaskUtilization = self.isInvalidSum(
+                    self.processorsNumber,
+                    tasksNumber,
+                    tasksWcet,
+                    tasksPeriod
+                )
             validTaskSet = not invalidTaskUtilization
 
         # generate folders
