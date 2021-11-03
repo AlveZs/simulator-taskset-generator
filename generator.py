@@ -45,10 +45,11 @@ class Generator:
                     invalidTaskUtilization = True
                     break
                 tasksWcet[i] = Decimal(tasksUtilizations[i])*Decimal(tasksPeriod[i])
-            # checks if total usage exceeds system capacity    
-            sumTasksUtilizations = sum(tasksUtilizations)
-            if (sumTasksUtilizations > (1 * self.processorsNumber)):
-                invalidTaskUtilization = True
+            # checks if total usage exceeds system capacity
+            if (not invalidTaskUtilization):
+                sumTasksUtilizations = sum(tasksUtilizations)
+                if (sumTasksUtilizations > (1 * self.processorsNumber)):
+                    invalidTaskUtilization = True
             validTaskSet = not invalidTaskUtilization
 
         # generate folders
