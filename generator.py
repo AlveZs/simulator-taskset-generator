@@ -15,11 +15,13 @@ class Generator:
     
     def isInvalidSum(self, processorsNumber, tasksNumber, tasksWcet, tasksPeriod):
         totalUtilzation = 0.0
+        precision = 10**-3
+        targetUtilization = self.utilization * processorsNumber
         for i in range(tasksNumber):
             taskUtilization = float(tasksWcet[i])/tasksPeriod[i]
             totalUtilzation = totalUtilzation + taskUtilization
-        totalUtilzation = totalUtilzation
-        return (totalUtilzation - 1*processorsNumber) > 0.0
+        difference = (totalUtilzation - targetUtilization)
+        return difference > 0.0 or difference < -precision
 
     def generate(self):
         tasksNumber = random.randrange(self.processorsNumber + 1, 2*self.processorsNumber + 1)
