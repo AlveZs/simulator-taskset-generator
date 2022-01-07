@@ -15,7 +15,7 @@ class Generator:
     
     def isInvalidSum(self, processorsNumber, tasksNumber, tasksWcet, tasksPeriod):
         totalUtilzation = 0.0
-        precision = 10**-3
+        precision = 10**-1
         targetUtilization = self.utilization * processorsNumber
         for i in range(tasksNumber):
             taskUtilization = float(tasksWcet[i])/tasksPeriod[i]
@@ -68,12 +68,12 @@ class Generator:
         # generate folders
         Path("./build/{:02d}-processors".format(self.processorsNumber)).mkdir(parents=True, exist_ok=True)
 
-        f = open("./build/{:02d}-processors/tasks-{}n-{}U-{:04d}.txt"
+        f = open("./build/{:02d}-processors/{:04d}-{}n-{}U.txt"
             .format(
                 self.processorsNumber,
+                self.generationNumber,
                 tasksNumber,
                 self.utilization,
-                self.generationNumber
             ), "w")
 
         # generate taskset file
